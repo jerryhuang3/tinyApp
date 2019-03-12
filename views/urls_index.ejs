@@ -8,11 +8,20 @@
     
     <body style="font-size:20px; padding:50px;">
     <!-- Add EJS code here -->
-    <h1> URL List </h1>
+    <h3> URL Shortener </h3>
+    <a href='#'>placeholder</a>
+    
+    <h3> URL List </h3>
         <%for (var url in urls) {%>
-            <ul><%=url%> : <%=urls[url]%></ul>
+            <form method="POST" action="/urls/<%=url%>/delete">
+            <%=urls[url]%> : <%=url%>
+                <button>DELETE</button>
+            </ul>
+            </form>
         <%}%>
-    <h2> URL Shortener </h2> 
-        <a href='#'>placeholder</a>
+
+    
+        
+    
 </body>
 </html>
