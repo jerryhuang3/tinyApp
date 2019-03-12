@@ -50,8 +50,10 @@ app.listen(PORT, () => {
 });
 
 app.post("/urls/", (req, res) => {
-    urlDatabase[generateRandomString()] = req.body.longURL; // Saves generated string as key and input as longURL
-    res.send("Ok");         // Respond with 'Ok' (we will replace this)
+    const shortURL = generateRandomString();
+    let path = "/urls/" + shortURL;
+    urlDatabase[shortURL] = req.body.longURL; // Saves generated string as key and input as longURL
+    res.redirect(path);
 });
 
 function generateRandomString() {
