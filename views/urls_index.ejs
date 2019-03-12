@@ -13,15 +13,12 @@
     
     <h3> URL List </h3>
         <%for (var url in urls) {%>
+            <%=urls[url]%> : <%=url%>  <a href="/urls/<%=url%>">Edit</a>
             <form method="POST" action="/urls/<%=url%>/delete">
-            <%=urls[url]%> : <%=url%>
                 <button>DELETE</button>
-            </ul>
             </form>
         <%}%>
-
     
-        
     
 </body>
 </html>
