@@ -42,7 +42,7 @@ app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}!`);
 });
 
-app.post("/urls", (req, res) => {
+app.post("/urls/:shortURL", (req, res) => {
     console.log(req.body);  // Log the POST request body to the console
 res.send("Ok");         // Respond with 'Ok' (we will replace this)
 });
