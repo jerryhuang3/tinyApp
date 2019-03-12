@@ -51,9 +51,8 @@ app.listen(PORT, () => {
 
 app.post("/urls/", (req, res) => {
     const shortURL = generateRandomString();
-    let path = "/urls/" + shortURL;
     urlDatabase[shortURL] = req.body.longURL; // Saves generated string as key and input as longURL
-    res.redirect(path);
+    res.redirect(`/urls/${shortURL}`);
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
