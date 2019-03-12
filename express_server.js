@@ -48,5 +48,6 @@ res.send("Ok");         // Respond with 'Ok' (we will replace this)
 });
 
 function generateRandomString() {
-
-}ç
+    let shortLink = Math.random().toString(36).substr(2, 8);   
+    return shortlink;
+}
