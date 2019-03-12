@@ -61,6 +61,11 @@ app.post("/urls/:shortURL/delete", (req, res) => {
     res.redirect("/urls");
 });
 
+app.post("/urls/:shortURL/update", (req, res) => {
+    urlDatabase[req.params.shortURL] = req.body.newlongURL ;
+    res.redirect("/urls");
+});
+
 function generateRandomString() {
     let shortLink = Math.random().toString(36).substr(2, 6);
     return shortLink;
