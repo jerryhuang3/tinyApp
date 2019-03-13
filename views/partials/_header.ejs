@@ -3,7 +3,7 @@
 <a href="/urls/login">Login</a> | <a href="/urls/register">Register</a>
 
 <%if (user !== undefined) {%>
-    <p>Logged in as <%=user['email']%>!
+    <p>Logged in as <%=user["email"]%>!
         <form method="POST" action="/logout">
             <button type="submit" class="btn btn-primary">Logout</button>
         </form>

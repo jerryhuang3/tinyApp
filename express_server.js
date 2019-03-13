@@ -34,7 +34,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-    let templateVars = { user: users[req.cookies.userid], urls: urlDatabase };
+    let userDatabase = urlsForUser(req.cookies.userid);
+    let templateVars = { user: users[req.cookies.userid], urls: userDatabase };
     res.render("urls_index", templateVars);
 });
 
@@ -72,9 +73,9 @@ app.get("/u/:shortURL", (req, res) => {
 //     res.json(urlDatabase);
 // });
 //
-// app.get("/hello", (req, res) => {
-//     res.send("<html><body>Hello <b>World</b></body></html>\n");
-// });
+app.get("/hello", (req, res) => {
+    res.send("<html><body>Hello <b>World</b></body></html>\n");
+});
 
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}!`);
@@ -135,4 +136,14 @@ function emailLookup(input) {
             return users[userID]['id'];
         };
     };
+};
+
+function urlsForUser(id) {
+    let userDatabase = {};
+    for (let shortURL in urlDatabase) {
+        if (urlDatabase[shortURL]["userID"] === id) {
+            userDatabase[shortURL] = urlDatabase[shortURL]["longURL"];
+        };
+    };
+    return userDatabase;
 };
