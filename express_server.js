@@ -11,8 +11,8 @@ app.use(cookieParser());
 app.set("view engine", "ejs");
 
 const urlDatabase = {
-    "b2xVn2": "http://www.lighthouselabs.ca",
-    "9sm5xK": "http://www.google.com"
+    b6UTxQ: { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
+    i3BoGr: { longURL: "https://www.google.ca", userID: "aJ48lW" }
 };
 
 const users = {
@@ -34,12 +34,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-    let templateVars = {  user: users[req.cookies.userid], urls: urlDatabase };
+    let templateVars = { user: users[req.cookies.userid], urls: urlDatabase };
     res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
-    let templateVars = {  user: users[req.cookies.userid] };
+    let templateVars = { user: users[req.cookies.userid] };
     if (req.cookies.userid === undefined) {
         res.redirect("/urls");
     };
@@ -47,12 +47,12 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.get("/urls/login", (req, res) => {
-    let templateVars = {  user: users[req.cookies.userid] };
+    let templateVars = { user: users[req.cookies.userid] };
 res.render("login", templateVars);
 });
 
 app.get("/urls/register", (req, res) => {
-    let templateVars = {  user: users[req.cookies.userid] };
+    let templateVars = { user: users[req.cookies.userid] };
     res.render("register", templateVars);
 });
 
@@ -63,7 +63,7 @@ app.get("/urls/:shortURL", (req, res) => {
 
 
 app.get("/u/:shortURL", (req, res) => {
-    let templateVars = {  user: users[req.cookies.userid]['email'] };
+    let templateVars = { user: users[req.cookies.userid]['email'] };
     const longURL = urlDatabase[req.params.shortURL];
     res.redirect(longURL);
 });
