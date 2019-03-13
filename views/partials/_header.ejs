@@ -1,8 +1,8 @@
 <h1>TINY APP</h1>
 
 <a href="/urls/login">Login</a> | <a href="/urls/register">Register</a>
-<%if (user.length > 0) {%>
-    <h2>Logged in as <%=user%>!
+<%if (user !== undefined) {%>
+    <h2>Logged in as <%=user['email']%>!
         <form method="POST" action="/logout">
             <button type="submit" class="btn btn-primary">Logout</button>
         </form>
