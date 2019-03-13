@@ -23,9 +23,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-        let templateVars = {  username: req.cookies["username"], urls: urlDatabase };
-    console.log(templateVars['kookie']);
-res.render("urls_index", templateVars);
+    let templateVars = {  username: req.cookies["username"], urls: urlDatabase };
+    res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
@@ -33,10 +32,16 @@ app.get("/urls/new", (req, res) => {
     res.render("urls_new", templateVars);
 });
 
+app.get("/urls/register", (req, res) => {
+    let templateVars = {  username: req.cookies["username"] };
+    res.render("register", templateVars);
+});
+
 app.get("/urls/:shortURL", (req, res) => {
     let templateVars = { username: req.cookies["username"], shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
     res.render("urls_show", templateVars);
 });
+
 
 app.get("/u/:shortURL", (req, res) => {
     let templateVars = {  username: req.cookies["username"] };
@@ -44,14 +49,14 @@ app.get("/u/:shortURL", (req, res) => {
     res.redirect(longURL);
 });
 
-app.get("/urls.json", (req, res) => {
-    res.json(urlDatabase);
-});
-
-app.get("/hello", (req, res) => {
-    res.send("<html><body>Hello <b>World</b></body></html>\n");
-});
-
+// app.get("/urls.json", (req, res) => {
+//     res.json(urlDatabase);
+// });
+//
+// app.get("/hello", (req, res) => {
+//     res.send("<html><body>Hello <b>World</b></body></html>\n");
+// });
+//
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}!`);
 });
@@ -80,6 +85,10 @@ app.post("/login", (req, res) => {
 app.post("/logout", (req, res) => {
     res.clearCookie('username');
     res.redirect("/urls");
+});
+
+app.post("/register", (req, res) => {
+    res.redirect("/urls/register"); 
 });
 
 function generateRandomString() {
