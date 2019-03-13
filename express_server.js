@@ -28,39 +28,38 @@ const users = {
     }
 }
 
-
 app.get("/", (req, res) => {
     res.send("Hello!");
 });
 
 app.get("/urls", (req, res) => {
-    let templateVars = {  user: req.cookies, urls: urlDatabase };
+    let templateVars = {  user: Object.keys(req.cookies), urls: urlDatabase };
     res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
-    let templateVars = {  user_id: req.cookies["user_id"] };
+    let templateVars = {  user: Object.keys(req.cookies) };
     res.render("urls_new", templateVars);
 });
 
 app.get("/urls/login", (req, res) => {
-    let templateVars = {  user: req.cookies };
+    let templateVars = {  user: Object.keys(req.cookies) };
 res.render("login", templateVars);
 });
 
 app.get("/urls/register", (req, res) => {
-    let templateVars = {  user_id: req.cookies["user_id"] };
+    let templateVars = {  user: Object.keys(req.cookies) };
     res.render("register", templateVars);
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-    let templateVars = { user_id: req.cookies["user_id"], shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
+    let templateVars = { user: Object.keys(req.cookies), shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
     res.render("urls_show", templateVars);
 });
 
 
 app.get("/u/:shortURL", (req, res) => {
-    let templateVars = {  user_id: req.cookies["user_id"] };
+    let templateVars = {  user: Object.keys(req.cookies) };
     const longURL = urlDatabase[req.params.shortURL];
     res.redirect(longURL);
 });
@@ -99,7 +98,7 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-    res.clearCookie(req.body.email);
+    res.clearCookie(Object.keys(req.cookies));
     res.redirect("/urls");
 });
 
