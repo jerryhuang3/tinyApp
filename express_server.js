@@ -99,13 +99,29 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
+    if (emailLookup(req.body.email) === true) {
+        res.status(400).send("HTTP 400 - BAD REQUEST: E-MAIL ALREADY USED!").end();
+    } else {
     let userID = generateRandomString();
     users[userID] = {id: userID, email: req.body.email, password: req.body.password};
     res.cookie('username', userID);
-    res.redirect("/urls/register"); 
+    res.redirect("/urls/register");
+    };
 });
 
 function generateRandomString() {
     let shortLink = Math.random().toString(36).substr(2, 6);
     return shortLink;
-}
+};
+
+function emailLookup(input) {
+    let emailArray = [];
+    for (let userID in users) {
+        emailArray.push(users[userID]['email']);
+    };
+    for (let i = 0; i < emailArray.length; i++) {
+        if (input === emailArray[i]) {
+            return true;
+        };
+    };
+};
