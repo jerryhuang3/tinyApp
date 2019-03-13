@@ -1,8 +1,8 @@
 <h1>TINY APP</h1>
 
 
-<%if (username !== undefined) {%>
-    <h2>Logged in as <%=username%>!
+<%if (user !== undefined) {%>
+    <h2>Logged in as <%=user%>!
         <form method="POST" action="/logout">
             <button type="submit" class="btn btn-primary">Logout</button>
         </form>
@@ -11,7 +11,7 @@
 <%} else {%>
     <h2>
         <form method="POST" action="/login">
-            <input class="form-control" type="text" name="username" placeholder="Username" style="width: 300px">
+            <input class="form-control" type="text" name="email" placeholder="email" style="width: 300px">
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </h2>
