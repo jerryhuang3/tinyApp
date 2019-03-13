@@ -73,7 +73,7 @@ app.listen(PORT, () => {
 });
 
 app.post("/urls/", (req, res) => {
-    const shortURL = generateRandomString();
+    let shortURL = generateRandomString();
     urlDatabase[shortURL] = req.body.longURL; // Saves generated string as key and input as longURL
     res.redirect(`/urls/${shortURL}`);
 });
@@ -99,6 +99,9 @@ app.post("/logout", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
+    let userID = generateRandomString();
+    users[userID] = {id: userID, email: req.body.email, password: req.body.password};
+    res.cookie('username', userID);
     res.redirect("/urls/register"); 
 });
 
