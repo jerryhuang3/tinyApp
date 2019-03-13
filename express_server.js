@@ -40,6 +40,9 @@ app.get("/urls", (req, res) => {
 
 app.get("/urls/new", (req, res) => {
     let templateVars = {  user: users[req.cookies.userid] };
+    if (req.cookies.userid === undefined) {
+        res.redirect("/urls");
+    };
     res.render("urls_new", templateVars);
 });
 
