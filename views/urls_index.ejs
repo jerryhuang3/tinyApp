@@ -14,13 +14,24 @@
     <!-- Add EJS code here -->
     <% include ./partials/_header %>
     
+    <%if (user !== undefined) {%>
     <p><strong>Your personal URL list 🙂 </strong></p>
-        <%for (var url in urls) {%>
-            <%=url%> : <%=urls[url]%>  <a href="/urls/<%=url%>">Edit</a>
-            <form method="POST" action="/urls/<%=url%>/delete">
-                <button class="btn btn-danger">DELETE</button>
-            </form>
+        <table class="table">
+            <tr>
+                <th>Short URL</th>
+                <th>Long URL</th>
+            <%for (var url in urls) {%>
+            <tr>
+                <td><%=url%></td> 
+                <td><%=urls[url]%></td>
+                <td><a class="btn btn-primary" href="/urls/<%=url%>" role="button">Edit</a></td>
+                <td><form method="POST" action="/urls/<%=url%>/delete">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form></td>
+            </tr>
         <%}%>
+        </table>
+    <%}%>
     
 </body>
 </html>

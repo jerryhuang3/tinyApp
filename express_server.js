@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls", (req, res) => {
-    let userDatabase = urlsForUser(req.cookies.userid);
+    let userDatabase = urlsForUser(req.cookies.userid)["id"];
     let templateVars = { user: users[req.cookies.userid], urls: userDatabase };
     res.render("urls_index", templateVars);
 });
@@ -89,6 +89,7 @@ app.post("/urls/", (req, res) => {
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
+    // if (req.cookies.userID =)
     delete urlDatabase[req.params.shortURL];
     res.redirect("/urls");
 });
@@ -140,10 +141,12 @@ function emailLookup(input) {
 
 function urlsForUser(id) {
     let userDatabase = {};
+    let userList = {};
     for (let shortURL in urlDatabase) {
         if (urlDatabase[shortURL]["userID"] === id) {
             userDatabase[shortURL] = urlDatabase[shortURL]["longURL"];
         };
+        userList["id"] = userDatabase;
     };
-    return userDatabase;
+    return userList;
 };
