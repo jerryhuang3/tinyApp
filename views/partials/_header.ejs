@@ -1,7 +1,18 @@
 <h1>TINY APP</h1>
 
-<p>Logged in as <%=username%>!</p>
-<form method="POST" action="/login">
-    <input class="form-control" type="text" name="username" placeholder="Username" style="width: 300px; margin: 1em">
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+
+<%if (username !== undefined) {%>
+    <h2>Logged in as <%=username%>!
+        <form method="POST" action="/logout">
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
+    </h2>
+    
+<%} else {%>
+    <h2>
+        <form method="POST" action="/login">
+            <input class="form-control" type="text" name="username" placeholder="Username">
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </h2>
+<%}%>
