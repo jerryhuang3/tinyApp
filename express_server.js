@@ -89,7 +89,10 @@ app.post("/urls/", (req, res) => {
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
+    if (urlDatabase[req.params.shortURL]["userID"] === req.cookies.userid)
+    {
     delete urlDatabase[req.params.shortURL];
+    };
     res.redirect("/urls");
 });
 
