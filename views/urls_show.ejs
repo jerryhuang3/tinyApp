@@ -14,17 +14,16 @@
     <body style="font-size:20px; padding:50px;">
     <% include ./partials/_header %>
     <!-- Add EJS code here -->
-    <h3> Create new URL </h3>
-    <a href='#'>placeholder</a>
-    
-    <p>Short URL : <%=shortURL%></p>
+
+    <br><br>
+    <p>Short URL : <a href="/u/<%=shortURL%>"><%=shortURL%></a></p>
 
     <%if (user !== undefined) {%>
     <table>
         <tr>
             <button class="btn btn-primary">Update</button>
                 <form method="POST" action="/urls/<%=shortURL%>/update">
-                    <input type="text" value="<%=longURL%>" name="newlongURL">
+                    <input type="text" value="<%=longURL%>" name="newlongURL" size="35">
                 </form>
         </tr>
     </table>
