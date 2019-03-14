@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var PORT = process.env.PORT;
+var PORT = (process.env.PORT || 3000);
 app.set("view engine", "ejs");
 
 const bcrypt = require('bcrypt');
