@@ -10,6 +10,7 @@
     <title>New URL - TinyApp Example</title>
 </head>
     
+<<<<<<< HEAD
 <body style="font-size:20px; padding:50px;">
 <% include ./partials/_header %>
 
@@ -18,6 +19,34 @@
 <%if (user !== undefined) {%>
     
 <p><strong>Your personal URL list 🙂 </strong></p>
+=======
+    <body style="font-size:20px; padding:50px;">
+    <!-- Add EJS code here -->
+    <% include ./partials/_header %><br><br>
+    
+    <%if (user !== undefined) {%>
+    <p><strong>Your personal URL list 🙂 </strong></p>
+        <table class="table">
+            <tr>
+                <th>Short URL</th>
+                <th>Long URL</th>
+                <th></th>
+                <th></th>
+            <%for (var url in urls) {%>
+            <tr>
+                <td><%=url%></td> 
+                <td><%=urls[url]%></td>
+                <td><a class="btn btn-primary" href="/urls/<%=url%>" role="button">Edit</a></td>
+                <td><form method="POST" action="/urls/<%=url%>/delete">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form></td>
+            </tr>
+        <%}%>
+        </table>
+    <%} else {%>
+        <p>Please log in or register first!</p>
+    <%}%>
+>>>>>>> 211b0a468e3120ba83cb23026bf14497f814e313
     
 <table class="table">
     <tr>
