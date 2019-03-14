@@ -13,14 +13,32 @@
     <body style="font-size:20px; padding:50px;">
     <!-- Add EJS code here -->
     <% include ./partials/_header %>
+
+    <%if (user !== undefined) {%>
     
     <p><strong>Your personal URL list 🙂 </strong></p>
+    
+    <table class="table">
+        <tr>
+            <th scope="col">Short URL</th>
+            <th scope="col">Long URL</th>
+            <th></th>
+            <th></th>
+        </tr>
         <%for (var url in urls) {%>
-            <%=url%> : <%=urls[url]%>  <a href="/urls/<%=url%>">Edit</a>
-            <form method="POST" action="/urls/<%=url%>/delete">
-                <button class="btn btn-danger">DELETE</button>
-            </form>
+        <tr>
+            <th scope="row"><%=url%></th>
+            <th><a href="/urls/<%=url%>"><%=urls[url]%></a></th>
+            <th><a class="btn btn-primary" href="/urls/<%=url%>" role="button">Edit</a></th>
+            <th><form method="POST" action="/urls/<%=url%>/delete">
+                    <button class="btn btn-danger">DELETE</button></form></th>
+        </tr>
         <%}%>
+        
+        <%} else {%>
+            <p>Please login or register!</p>
+        <%}%>
+    
     
 </body>
 </html>

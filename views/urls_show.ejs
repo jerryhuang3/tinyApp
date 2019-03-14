@@ -17,12 +17,21 @@
     <h3> Create new URL </h3>
     <a href='#'>placeholder</a>
     
-    <h3> Show short URL : <%=shortURL%></h3>
-    <form method="POST" action="/urls/<%=shortURL%>/update">
-        <button>UPDATE</button>
-        <input type="text" value="<%=longURL%>  " name="newlongURL">
-    </form><br><br>
-        
+    <p>Short URL : <%=shortURL%></p>
+
+    <%if (user !== undefined) {%>
+    <table>
+        <tr>
+            <button class="btn btn-primary">Update</button>
+                <form method="POST" action="/urls/<%=shortURL%>/update">
+                    <input type="text" value="<%=longURL%>" name="newlongURL">
+                </form>
+        </tr>
+    </table>
+    <br><br>
+    <%} else {%>
+        <p>Please log in to edit your URL.</p>
+    <%}%>
    
 </body>
 </html>
