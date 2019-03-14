@@ -20,11 +20,18 @@
 
 <%if (user === undefined) {%>
 <h1> Login </h1>
-    <form method="POST" action="/urls/login">
-        E-mail:<input class="form-control" type="email" name="email" placeholder="e-mail" style="width: 300px">
-        Password:<input class="form-control" type="password" name="password" placeholder="password" style="width: 300px">
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+<br>
+    <table>
+        <tr>
+            <th>
+                <form method="POST" action="/urls/login">
+                    E-mail:<input class="form-control" type="email" name="email" placeholder="email" style="width: 300px">
+                    Password:<input class="form-control" type="password" name="password" placeholder="password" style="width: 300px">
+                    <button type="submit" class="btn btn-primary mt-2">Login</button>
+                </form>
+            </th>
+        </tr>
+    </table>
 <%} else {%>
     <p>Already logged in!</p>
 <%}%>

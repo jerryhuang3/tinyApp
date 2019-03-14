@@ -18,17 +18,22 @@
 
 <!-- REGISTRATION FORM -->
 
-
 <%if (user === undefined) {%>
 <h1> Register </h1>
-        <form method="POST" action="/register">
-            <input class="form-control" type="email" name="email" placeholder="email" style="width: 300px">
-                <input class="form-control" type="password" name="password" placeholder="password" style="width: 300px">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    
+<br>
+    <table>
+        <tr>
+            <th>
+                <form method="POST" action="/register">
+                    E-mail:<input class="form-control" type="email" name="email" placeholder="email" style="width: 300px">
+                    Password:<input class="form-control" type="password" name="password" placeholder="password" style="width: 300px">
+                    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                </form>
+            </th>
+        </tr>
+    </table>
 <%} else {%>
-<p>Already logged in!</p>
+    <p>Already logged in!</p>
 <%}%>
 
 </body>
