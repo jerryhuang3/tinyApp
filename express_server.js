@@ -1,5 +1,6 @@
 var express = require("express");
 var cookieParser = require('cookie-parser')
+const bcrypt = require('bcrypt');
 var app = express();
 var PORT = 8080; // default port 8080
 
@@ -10,23 +11,8 @@ app.use(cookieParser());
 
 app.set("view engine", "ejs");
 
-const urlDatabase = {
-    b6UTxQ: { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
-    i3BoGr: { longURL: "https://www.google.ca", userID: "aJ48lW" }
-};
-
-const users = {
-    "userRandomID": {
-        id: "userRandomID",
-        email: "user@example.com",
-        password: "purple-monkey-dinosaur"
-    },
-    "user2RandomID": {
-        id: "user2RandomID",
-        email: "user2@example.com",
-        password: "dishwasher-funk"
-    }
-}
+const urlDatabase = {};
+const users = {};
 
 
 app.get("/", (req, res) => {
@@ -65,14 +51,14 @@ app.get("/urls/:shortURL", (req, res) => {
 
 app.get("/u/:shortURL", (req, res) => {
     let templateVars = { user: users[req.cookies.userid] };
-    const longURL = urlDatabase[req.params.shortURL].longURL;
-    res.redirect(longURL);
+    let long = urlDatabase[req.params.shortURL].longURL;
+    res.redirect(long);
 });
 
-// app.get("/urls.json", (req, res) => {
-//     res.json(urlDatabase);
-// });
-//
+app.get("/urls.json", (req, res) => {
+    res.json(urlDatabase);
+});
+
 app.get("/hello", (req, res) => {
     res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
@@ -104,9 +90,10 @@ app.post("/urls/:shortURL/update", (req, res) => {
 app.post("/urls/login", (req, res) => {
     let id = emailLookup(req.body.email);
     
-    if (id !== undefined && req.body.password === users[id]["password"] ) {
+    if (id !== undefined && bcrypt.compareSync(req.body.password, users[id]["password"]) === true ) {
         res.cookie("userid", id);
         res.redirect("/urls");
+        console.log(users);
     } else {
         res.status(403).send("HTTP 403 - NOT FOUND: E-MAIL OR PASSWORD INCORRECT!")
     };
@@ -122,9 +109,11 @@ app.post("/register", (req, res) => {
         res.status(400).send("HTTP 400 - BAD REQUEST: E-MAIL ALREADY USED!").end();
     } else {
         let userID = generateRandomString();
-        users[userID] = {id: userID, email: req.body.email, password: req.body.password};
+        const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+        users[userID] = {id: userID, email: req.body.email, password: hashedPassword};
         res.cookie("userid", userID);
         res.redirect("/urls");
+        console.log(users);
     };
 });
 

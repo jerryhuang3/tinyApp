@@ -15,16 +15,27 @@
     <% include ./partials/_header %>
     <!-- Add EJS code here -->
 
-    <br><br>
+    
     <p>Short URL : <a href="/u/<%=shortURL%>"><%=shortURL%></a></p>
 
     <%if (user !== undefined) {%>
     <table>
         <tr>
-            <button class="btn btn-primary">Update</button>
-                <form method="POST" action="/urls/<%=shortURL%>/update">
-                    <input type="text" value="<%=longURL%>" name="newlongURL" size="35">
+            <th>
+                Short URL : <a href="/u/<%=shortURL%>"><%=shortURL%></a
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <form class="form-inline" action="/urls/<%=shortURL%>/update"" method="POST">
+                    <div class="form-group mb-2">
+                        <label for="longURL">Edit your URL:</label>
+                        <input class="form-control" type="url" name="newlongURL" value="<%=longURL%>" style="width: 300px; margin: 1em">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
                 </form>
+                
+            </th>
         </tr>
     </table>
     <br><br>
@@ -34,3 +45,4 @@
    
 </body>
 </html>
+
