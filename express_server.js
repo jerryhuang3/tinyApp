@@ -1,10 +1,6 @@
 /*========================Modules==============================*/
 var express = require('express');
 var app = express();
-<<<<<<< HEAD
-var PORT = process.env.PORT;
-=======
->>>>>>> testing
 app.set("view engine", "ejs");
 const bcrypt = require('bcrypt');
 const bodyParser = require("body-parser");
@@ -56,8 +52,6 @@ function urlsForUser(id) {
     };
     return userDatabase;
 };
-
-
 
 
 /*===========================GET===============================*/
@@ -122,8 +116,6 @@ app.get("/urls.json", (req, res) => {
 app.get("/easteregg", (req, res) => {
     res.send("<html><body>Hey you found me!</body></html>\n");
 });
-
-
 
 
 
