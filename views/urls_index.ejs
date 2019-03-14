@@ -9,63 +9,36 @@
 
     <title>New URL - TinyApp Example</title>
 </head>
-    
-<<<<<<< HEAD
-<body style="font-size:20px; padding:50px;">
-<% include ./partials/_header %>
+
 
 <!-- URL Index List -->
+    
 
+
+<body style="font-size:20px; padding:50px;">
+<!-- Add EJS code here -->
+<% include ./partials/_header %>
 <%if (user !== undefined) {%>
-    
 <p><strong>Your personal URL list 🙂 </strong></p>
-=======
-    <body style="font-size:20px; padding:50px;">
-    <!-- Add EJS code here -->
-    <% include ./partials/_header %><br><br>
-    
-    <%if (user !== undefined) {%>
-    <p><strong>Your personal URL list 🙂 </strong></p>
-        <table class="table">
-            <tr>
-                <th>Short URL</th>
-                <th>Long URL</th>
-                <th></th>
-                <th></th>
-            <%for (var url in urls) {%>
-            <tr>
-                <td><%=url%></td> 
-                <td><%=urls[url]%></td>
-                <td><a class="btn btn-primary" href="/urls/<%=url%>" role="button">Edit</a></td>
-                <td><form method="POST" action="/urls/<%=url%>/delete">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form></td>
-            </tr>
-        <%}%>
-        </table>
-    <%} else {%>
-        <p>Please log in or register first!</p>
-    <%}%>
->>>>>>> 211b0a468e3120ba83cb23026bf14497f814e313
-    
 <table class="table">
     <tr>
-        <th scope="col">Short URL</th>
-        <th scope="col">Long URL</th>
+        <th>Short URL</th>
+        <th>Long URL</th>
         <th></th>
         <th></th>
-    </tr>
-    <%for (var url in urls) {%>
+        <%for (var url in urls) {%>
     <tr>
-        <th><a href="<%=urls[url]%>"><%=url%></a></th>
-        <th><a href="<%=urls[url]%>"><%=urls[url]%></a></th>
-        <th><a class="btn btn-primary" href="/urls/<%=url%>" role="button">Edit</a></th>
-        <th><form method="POST" action="/urls/<%=url%>/delete">
-                <button class="btn btn-danger">DELETE</button></form></th>
+        <td><a href="<%=urls[url]%>"><%=url%></a></td> 
+        <td><a href="<%=urls[url]%>"><%=urls[url]%></a></td>
+        <td><a class="btn btn-primary" href="/urls/<%=url%>" role="button">Edit</a></td>
+        <td><form method="POST" action="/urls/<%=url%>/delete">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form></td>
     </tr>
     <%}%>
-    <%} else {%>
-        <p>Please login or register!</p>
-    <%}%>
+</table>
+<%} else {%>
+    <p>Please log in or register first!</p>
+<%}%>
 </body>
 </html>
