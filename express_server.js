@@ -1,20 +1,14 @@
 /*========================Modules==============================*/
 var express = require('express');
 var app = express();
-<<<<<<< HEAD
-var PORT = process.env.PORT;
-=======
->>>>>>> testing
-app.set("view engine", "ejs");
 const bcrypt = require('bcrypt');
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
+app.set("view engine", "ejs");
 
 /*==========================Port===============================*/
-var PORT = 8080;
-app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}!`);
-});
+var PORT = process.env.PORT;
+app.listen(PORT);
 
 
 /*======================Encrypted Cookies======================*/
@@ -122,8 +116,6 @@ app.get("/urls.json", (req, res) => {
 app.get("/easteregg", (req, res) => {
     res.send("<html><body>Hey you found me!</body></html>\n");
 });
-
-
 
 
 
