@@ -28,8 +28,8 @@
     </tr>
     <%for (var url in urls) {%>
     <tr>
-        <th scope="row"><%=url%></th>
-        <th><a href="/urls/<%=url%>"><%=urls[url]%></a></th>
+        <th><a href="<%=urls[url]%>"><%=url%></a></th>
+        <th><a href="<%=urls[url]%>"><%=urls[url]%></a></th>
         <th><a class="btn btn-primary" href="/urls/<%=url%>" role="button">Edit</a></th>
         <th><form method="POST" action="/urls/<%=url%>/delete">
                 <button class="btn btn-danger">DELETE</button></form></th>
