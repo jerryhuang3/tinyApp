@@ -1,15 +1,49 @@
-<h1>TINY APP</h1>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/urls">tiny App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/urls">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/urls/new">Create</a>
+            </li>
+        </ul>
+    </div>
+    <div class="text-right" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/urls/login">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/urls/register">Register</a>
+            </li>
+            <%if (user !== undefined) {%>
+                <li class="nav-item">
+                    <form method="POST" action="/logout">
+                        <button type="submit" class="btn btn-primary">Logout</button>
+                    </form>
+                </li>
+            <%}%>   
+        </ul>
+    </div>
+</nav>
 
-<a href="/urls/">Home</a> |
-<a href="/urls/login">Login</a> | 
-<a href="/urls/register">Register</a> | 
-<a href="/urls/new">Create New URL</a>
-
+<!--<h1>Tiny App</h1>-->
+<!--<table>-->
+    <!--<tr>-->
+        <!--<th><a href="/urls/">Home |</a></th>-->
+        <!--<th><a href="/urls/login">Login |</a></th>-->
+        <!--<th><a href="/urls/register">Register |</a></th>-->
+        <!--<th><a href="/urls/new">Create New URL</a></th>-->
+    <!--</tr>   -->
+<!--</table>-->
 
 <%if (user !== undefined) {%>
-    <p>Logged in as <%=user["email"]%>!
-        <form method="POST" action="/logout">
-            <button type="submit" class="btn btn-primary">Logout</button>
-        </form>
-    </p>
+    <p>Logged in as <%=user["email"]%>!</p>
 <%}%>
+
+<br><br>
