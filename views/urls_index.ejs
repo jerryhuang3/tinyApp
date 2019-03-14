@@ -12,7 +12,7 @@
     
     <body style="font-size:20px; padding:50px;">
     <!-- Add EJS code here -->
-    <% include ./partials/_header %>
+    <% include ./partials/_header %><br><br>
     
     <%if (user !== undefined) {%>
     <p><strong>Your personal URL list 🙂 </strong></p>
@@ -20,6 +20,8 @@
             <tr>
                 <th>Short URL</th>
                 <th>Long URL</th>
+                <th></th>
+                <th></th>
             <%for (var url in urls) {%>
             <tr>
                 <td><%=url%></td> 
@@ -31,6 +33,8 @@
             </tr>
         <%}%>
         </table>
+    <%} else {%>
+        <p>Please log in or register first!</p>
     <%}%>
     
 </body>

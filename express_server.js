@@ -103,7 +103,7 @@ app.post("/urls/login", (req, res) => {
     let id = emailLookup(req.body.email);
     
     if (id !== undefined && req.body.password === users[id]["password"] ) {
-        res.cookie("userid", id);
+        res.cookie("userid", id, {maxAge: 1800000});
         res.redirect("/urls");
     } else {
         res.status(403).send("HTTP 403 - NOT FOUND: E-MAIL OR PASSWORD INCORRECT!")
@@ -121,7 +121,7 @@ app.post("/register", (req, res) => {
     } else {
         let userID = generateRandomString();
         users[userID] = {id: userID, email: req.body.email, password: req.body.password};
-        res.cookie("userid", userID);
+        res.cookie("userid", userID, {maxAge: 1800000});
         res.redirect("/urls");
     };
 });
