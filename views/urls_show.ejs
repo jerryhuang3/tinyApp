@@ -1,48 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <title>TinyApp</title>
-    </head>
+</head>
     
 
     
-    <body style="font-size:20px; padding:50px;">
-    <% include ./partials/_header %>
-    <!-- Add EJS code here -->
+<body style="font-size:20px; padding:50px;">
+<% include ./partials/_header %>
 
-    
-    <p>Short URL : <a href="/u/<%=shortURL%>"><%=shortURL%></a></p>
+<!-- Updating URL form -->
 
-    <%if (user !== undefined) {%>
-    <table>
-        <tr>
-            <th>
-                Short URL : <a href="/u/<%=shortURL%>"><%=shortURL%></a
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <form class="form-inline" action="/urls/<%=shortURL%>/update"" method="POST">
-                    <div class="form-group mb-2">
-                        <label for="longURL">Edit your URL:</label>
-                        <input class="form-control" type="url" name="newlongURL" value="<%=longURL%>" style="width: 300px; margin: 1em">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+<%if (user !== undefined) {%>
+<table>
+    <tr>
+        <th>
+            Short URL &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;&nbsp; <a href="/u/<%=shortURL%>"><%=shortURL%></a
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <form class="form-inline" action="/urls/<%=shortURL%>/update"" method="POST">
+            <div class="form-group mb-2">
+                <label for="longURL">Change URL:</label>
+                <input class="form-control" type="url" name="newlongURL" value="<%=longURL%>" style="width: 300px; margin: 1em">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            </form>
                 
-            </th>
-        </tr>
-    </table>
-    <br><br>
-    <%} else {%>
-        <p>Please log in to edit your URL.</p>
-    <%}%>
-   
+        </th>
+    </tr>
+</table>
+<br><br>
+<%} else {%>
+    <p>Please log in to edit your URL.</p>
+<%}%>
+
 </body>
 </html>
-
