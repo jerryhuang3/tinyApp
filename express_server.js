@@ -8,8 +8,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 /*==========================Port===============================*/
-var PORT = process.env.PORT || 8000;
-app.listen(PORT);
+var port = process.env.PORT || 8000;
+app.listen(port);
 
 
 /*======================Encrypted Cookies======================*/
