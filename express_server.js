@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
+
 /*==========================Port===============================*/
 var PORT = 8080;
 app.listen(PORT, () => {
@@ -54,6 +55,7 @@ function urlsForUser(id) {
 };
 
 
+
 /*===========================GET===============================*/
 
 // Home Page
@@ -63,13 +65,8 @@ app.get("/", (req, res) => {
 
 // Display all URLs created by logged in user
 app.get("/urls", (req, res) => {
-<<<<<<< HEAD
     let userDatabase = urlsForUser(req.session.userid);
     let templateVars = { user: users[req.session.userid], urls: userDatabase };
-=======
-    let userDatabase = urlsForUser(req.cookies.userid)["id"];
-    let templateVars = { user: users[req.cookies.userid], urls: userDatabase };
->>>>>>> 211b0a468e3120ba83cb23026bf14497f814e313
     res.render("urls_index", templateVars);
 });
 
@@ -81,7 +78,6 @@ app.get("/urls/new", (req, res) => {
     };
     res.render("urls_new", templateVars);
 });
-
 
 // Login page
 app.get("/urls/login", (req, res) => {
@@ -129,14 +125,9 @@ app.post("/urls/", (req, res) => {
 
 // Deletes URL and all other and associated information in database
 app.post("/urls/:shortURL/delete", (req, res) => {
-<<<<<<< HEAD
     if (urlDatabase[req.params.shortURL]["userID"] === req.session.userid) {
         delete urlDatabase[req.params.shortURL];
     };
-=======
-    // if (req.cookies.userID =)
-    delete urlDatabase[req.params.shortURL];
->>>>>>> 211b0a468e3120ba83cb23026bf14497f814e313
     res.redirect("/urls");
 });
 
@@ -149,15 +140,9 @@ app.post("/urls/:shortURL/update", (req, res) => {
 // Login handling
 app.post("/urls/login", (req, res) => {
     let id = emailLookup(req.body.email);
-    
-<<<<<<< HEAD
     // Errors out if email or password is incorrect
     if (id !== undefined && bcrypt.compareSync(req.body.password, users[id]["password"]) === true ) {
         req.session.userid = id;
-=======
-    if (id !== undefined && req.body.password === users[id]["password"] ) {
-        res.cookie("userid", id, {maxAge: 1800000});
->>>>>>> 211b0a468e3120ba83cb23026bf14497f814e313
         res.redirect("/urls");
     } else {
         res.status(403).send("HTTP 403 - NOT FOUND: E-MAIL OR PASSWORD INCORRECT!")
@@ -172,47 +157,15 @@ app.post("/register", (req, res) => {
     } else {
         // Encrypts all passwords with bcrypt
         let userID = generateRandomString();
-<<<<<<< HEAD
         const hashedPassword = bcrypt.hashSync(req.body.password, 10);
         users[userID] = {id: userID, email: req.body.email, password: hashedPassword};
         req.session.userid = userID;
-=======
-        users[userID] = {id: userID, email: req.body.email, password: req.body.password};
-        res.cookie("userid", userID, {maxAge: 1800000});
->>>>>>> 211b0a468e3120ba83cb23026bf14497f814e313
         res.redirect("/urls");
     };
 });
 
-<<<<<<< HEAD
 // Clears cookies upon logging out
 app.post("/logout", (req, res) => {
     req.session = null;
 res.redirect("/urls");
 });
-=======
-function generateRandomString() {
-    let shortLink = Math.random().toString(36).substr(2, 6);
-    return shortLink;
-};
-
-function emailLookup(input) {
-    for (let userID in users) {
-        if (input === users[userID]['email']) {
-            return users[userID]['id'];
-        };
-    };
-};
-
-function urlsForUser(id) {
-    let userDatabase = {};
-    let userList = {};
-    for (let shortURL in urlDatabase) {
-        if (urlDatabase[shortURL]["userID"] === id) {
-            userDatabase[shortURL] = urlDatabase[shortURL]["longURL"];
-        };
-        userList["id"] = userDatabase;
-    };
-    return userList;
-};
->>>>>>> 211b0a468e3120ba83cb23026bf14497f814e313
