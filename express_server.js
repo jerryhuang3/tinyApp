@@ -8,10 +8,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 /*==========================Port===============================*/
-var PORT = 8080;
-app.listen(PORT, () => {
-    console.log(`Example app listening on port ${PORT}!`);
-});
+var PORT = process.env.PORT || 8000;
+app.listen(PORT);
 
 
 /*======================Encrypted Cookies======================*/
