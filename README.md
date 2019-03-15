@@ -17,3 +17,5 @@
 ## Getting Started
 - Use `npm install` to install all dependencies listed above.
 - Run `node express-server.js` to start up the web server.
+
+- To deploy on Heroku, set port to `var PORT = process.env.PORT || 8000`

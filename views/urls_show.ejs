@@ -6,18 +6,17 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <title>TinyApp</title>
+    <title>tinyApp URL</title>
 </head>
-    
 
-    
 <body style="font-size:20px; padding:50px;">
 <% include ./partials/_header %>
 
 
 <!-- Updating URL form -->
-
 <%if (user !== undefined) {%>
+<p>Total Visits : <%=visit.length%>
+<p>Unique Visitors: <%=unique%>
 <table>
     <tr>
         <th>
@@ -27,30 +26,30 @@
     <tr>
         <th>
             <form class="form-inline" action="/urls/<%=shortURL%>/update/?_method=PUT" method="POST">
-            <div class="form-group mb-2">
-                <label for="longURL">Change URL:</label>
-                <input class="form-control" type="url" name="newlongURL" value="<%=longURL%>" style="width: 300px; margin: 1em">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
+                <div class="form-group mb-2">
+                    <label for="longURL">Change URL:</label>
+                    <input class="form-control" type="url" name="newlongURL" value="<%=longURL%>" style="width: 300px; margin: 1em">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </form>
         </th>
     </tr>
-    <tr>
-        <th>Total Visits : <%=visit.length%></th>
-        <th>Unique visits: <%=unique%></th>
+
+</table>
+
+<table class="table table-sm table-active">
+    <tr>History
+        <th>Time</th>
+        <th>User</th>
     </tr>
-</table>
-
-<table>
-    <tr>History</tr>
+    
 <%for (let i = 0; i < time.length; i++) {%>
-<tr>
-    <td><%=time[i]%></td>
-    <td><%=visit[i]%></td>
-</tr>
-<%}%>
+    <tr>
+        <td scope="col"><%=time[i]%></td>
+        <td scope="col"><%=visit[i]%></td>
+    </tr>
+    <%}%>
 </table>
-
 <br><br>
 <%} else {%>
     <p>Please log in to edit your URL.</p>

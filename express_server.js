@@ -1,23 +1,26 @@
 /*========================Modules==============================*/
-const express = require('express');
-const bcrypt = require('bcrypt'); 
+const express = require("express");
+const bcrypt = require("bcrypt"); 
 const app = express();
-const methodOverride = require('method-override');
+const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 
 app.set("view engine", "ejs");
+app.use(express.static("images"));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(methodOverride('_method'));
+app.use(methodOverride("_method"));
 
 
 /*==========================Port===============================*/
-var port = 8080;
-app.listen(port);
+var PORT = 8080;
+app.listen(PORT, () => {
+    console.log("Server is up and running!");
+});
 
 /*======================Encrypted Cookies======================*/
-var cookieSession = require('cookie-session');
+var cookieSession = require("cookie-session");
 app.use(cookieSession({
-    name: 'session',
+    name: "session",
     keys: ["secretkey"]
 }));
 
@@ -28,9 +31,9 @@ const urlDatabase = {};
 //     shortURL: {
 //         longURL: "http://www.lighthouselabs.com",
 //         userID: "3kds3kse",
-//         visitors: 6,
+//         visitors: [],
 //         uniqueVisitors: ["3kds3kse", "288jnssw"],
-//         time: ["",""]
+//         time: []
 //     }
 // }
 
@@ -49,27 +52,27 @@ const users = {};
 function generateRandomString() {
     let shortLink = Math.random().toString(36).substr(2, 8);
     return shortLink;
-}
+};
 
 // Returns user ID if login or registration email matches
 function emailLookup(input) {
     for (let userID in users) {
-        if (input === users[userID]['email']) {
-            return users[userID]['id'];
+        if (input === users[userID].email) {
+            return users[userID].id;
         }
     }
-}
+};
 
 // Creates object with all of user's short and long URLs
 function urlsForUser(id) {
     let userDatabase = {};
     for (let shortURL in urlDatabase) {
-        if (urlDatabase[shortURL]["userID"] === id) {
+        if (urlDatabase[shortURL].userID === id) {
             userDatabase[shortURL] = urlDatabase[shortURL]["longURL"];
         }
     }
     return userDatabase;
-}
+};
 
 function uniqueID(shortURL, userID) {
     let array = urlDatabase[shortURL].uniqueVisitors;
@@ -84,7 +87,7 @@ function uniqueID(shortURL, userID) {
     if (count === 0) {
         array.push(userID);
     }
-}
+};
 
 
 /*===========================GET===============================*/
@@ -131,8 +134,7 @@ app.get("/urls/:shortURL", (req, res) => {
     urlDatabase[req.params.shortURL].visitors.push(req.session.userid);
     uniqueID(req.params.shortURL, req.session.userid);
     urlDatabase[req.params.shortURL].time.push(Date());
-    }; // Adds view counts appropriately
-    console.log(urlDatabase);
+    }; // Adds view counts 
     
     let templateVars = {
         shortURL: req.params.shortURL,
@@ -167,7 +169,7 @@ app.get("/easteregg", (req, res) => {
 app.post("/urls/", (req, res) => {
     let shortURL = generateRandomString();
     urlDatabase[shortURL] = {"longURL": req.body.longURL, "userID": req.session.userid};
-    urlDatabase[shortURL].visitors = []; // Initializes visitor count
+    urlDatabase[shortURL].visitors = []; // Initializes visitor count array
     urlDatabase[shortURL].time = []; // Initializes timestamp array
     urlDatabase[shortURL].uniqueVisitors = []; // Initializes unique visitor array
     res.redirect(`/urls/${shortURL}`); 
