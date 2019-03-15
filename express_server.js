@@ -1,16 +1,18 @@
 /*========================Modules==============================*/
-var express = require('express');
-var app = express();
-app.set("view engine", "ejs");
-const bcrypt = require('bcrypt');
+const express = require('express');
+const bcrypt = require('bcrypt'); 
+const app = express();
+const methodOverride = require('method-override');
 const bodyParser = require("body-parser");
+
+app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride('_method'));
 
 
 /*==========================Port===============================*/
-var port = process.env.PORT || 8000;
+var port = 8080;
 app.listen(port);
-
 
 /*======================Encrypted Cookies======================*/
 var cookieSession = require('cookie-session');
@@ -22,7 +24,24 @@ app.use(cookieSession({
 
 /*=========================Database============================*/
 const urlDatabase = {};
+// urlDatabase = {
+//     shortURL: {
+//         longURL: "http://www.lighthouselabs.com",
+//         userID: "3kds3kse",
+//         visitors: 6,
+//         uniqueVisitors: ["3kds3kse", "288jnssw"],
+//         time: ["",""]
+//     }
+// }
+
 const users = {};
+// users = {
+//     userID: {
+//         id: "3kds3kse",
+//         email: "test@test.com",
+//         password: "bcryptpassword"
+//     }
+// }
 
 
 /*=========================Functions===========================*/
@@ -30,16 +49,16 @@ const users = {};
 function generateRandomString() {
     let shortLink = Math.random().toString(36).substr(2, 8);
     return shortLink;
-};
+}
 
 // Returns user ID if login or registration email matches
 function emailLookup(input) {
     for (let userID in users) {
         if (input === users[userID]['email']) {
             return users[userID]['id'];
-        };
-    };
-};
+        }
+    }
+}
 
 // Creates object with all of user's short and long URLs
 function urlsForUser(id) {
@@ -47,11 +66,25 @@ function urlsForUser(id) {
     for (let shortURL in urlDatabase) {
         if (urlDatabase[shortURL]["userID"] === id) {
             userDatabase[shortURL] = urlDatabase[shortURL]["longURL"];
-        };
-    };
+        }
+    }
     return userDatabase;
-};
+}
 
+function uniqueID(shortURL, userID) {
+    let array = urlDatabase[shortURL].uniqueVisitors;
+    let count = 0;
+    // Check if userID is in unique views
+    for (i = 0; i < array.length; i++) {
+        if (userID === array[i]) {
+            count = 1;
+        }
+    }
+    // Add new userID array of unique visitors
+    if (count === 0) {
+        array.push(userID);
+    }
+}
 
 
 /*===========================GET===============================*/
@@ -64,7 +97,8 @@ app.get("/", (req, res) => {
 // Display all URLs created by logged in user
 app.get("/urls", (req, res) => {
     let userDatabase = urlsForUser(req.session.userid);
-    let templateVars = { user: users[req.session.userid], urls: userDatabase };
+    let templateVars = { user: users[req.session.userid], 
+        urls: userDatabase, visit: urlDatabase.visitors };
     res.render("urls_index", templateVars);
 });
 
@@ -92,11 +126,26 @@ app.get("/urls/register", (req, res) => {
 
 // Page for each unique short URL
 app.get("/urls/:shortURL", (req, res) => {
-    let templateVars = { user: users[req.session.userid], shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL].longURL };
+    
+    if (req.session.userid) {
+    urlDatabase[req.params.shortURL].visitors.push(req.session.userid);
+    uniqueID(req.params.shortURL, req.session.userid);
+    urlDatabase[req.params.shortURL].time.push(Date());
+    }; // Adds view counts appropriately
+    console.log(urlDatabase);
+    
+    let templateVars = {
+        shortURL: req.params.shortURL,
+        user: users[req.session.userid],
+        longURL: urlDatabase[req.params.shortURL].longURL, 
+        visit: urlDatabase[req.params.shortURL].visitors, 
+        unique: urlDatabase[req.params.shortURL].uniqueVisitors.length,
+        time: urlDatabase[req.params.shortURL].time
+    };
     res.render("urls_show", templateVars);
 });
 
-// Redirects to page of the stored long url
+// Redirects to page of the stored url
 app.get("/u/:shortURL", (req, res) => {
     let templateVars = { user: users[req.session.userid] };
     let long = urlDatabase[req.params.shortURL].longURL;
@@ -114,15 +163,18 @@ app.get("/easteregg", (req, res) => {
 
 
 /*===========================POST==============================*/
-// Generates random short URL and stores into database
+// Generates random short URL and stores into database. 
 app.post("/urls/", (req, res) => {
     let shortURL = generateRandomString();
-    urlDatabase[shortURL] = {"longURL": req.body.longURL, "userID": req.session.userid}; 
+    urlDatabase[shortURL] = {"longURL": req.body.longURL, "userID": req.session.userid};
+    urlDatabase[shortURL].visitors = []; // Initializes visitor count
+    urlDatabase[shortURL].time = []; // Initializes timestamp array
+    urlDatabase[shortURL].uniqueVisitors = []; // Initializes unique visitor array
     res.redirect(`/urls/${shortURL}`); 
 });
 
 // Deletes URL and all other and associated information in database
-app.post("/urls/:shortURL/delete", (req, res) => {
+app.delete("/urls/:shortURL/delete", (req, res) => {
     if (urlDatabase[req.params.shortURL]["userID"] === req.session.userid) {
         delete urlDatabase[req.params.shortURL];
     };
@@ -130,7 +182,7 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 });
 
 // Updates the long URL to existing short URL
-app.post("/urls/:shortURL/update", (req, res) => {
+app.put("/urls/:shortURL/update", (req, res) => {
     urlDatabase[req.params.shortURL].longURL = req.body.newlongURL ;
     res.redirect("/urls");
 });
@@ -143,8 +195,8 @@ app.post("/urls/login", (req, res) => {
         req.session.userid = id;
         res.redirect("/urls");
     } else {
-        res.status(403).send("HTTP 403 - NOT FOUND: E-MAIL OR PASSWORD INCORRECT!")
-    };
+        res.status(403).send("HTTP 403 - NOT FOUND: E-MAIL OR PASSWORD INCORRECT!");
+    }
 });
 
 // Registration handling
@@ -165,5 +217,5 @@ app.post("/register", (req, res) => {
 // Clears cookies upon logging out
 app.post("/logout", (req, res) => {
     req.session = null;
-res.redirect("/urls");
+    res.redirect("/urls");
 });
