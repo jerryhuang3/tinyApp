@@ -12,7 +12,7 @@ app.use(methodOverride("_method"));
 
 
 /*==========================Port===============================*/
-var PORT = 8080;
+var PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log("Server is up and running!");
 });
