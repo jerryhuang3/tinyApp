@@ -14,6 +14,7 @@
 - bcrypt
 - body-parser
 - cookie-session
+- method-override
 
 ## Getting Started
 - Use `npm install` to install all dependencies listed above.
