@@ -4,7 +4,7 @@
     
 ## Final App
 !["Home Page"](https://github.com/jerryhuang3/Tiny-App/blob/master/docs/Home%20Page.png)
-!["URL Page With Views"](https://github.com/jerryhuang3/Tiny-App/blob/master/docs/Creating%20a%20short%20URL.png)
+!["URL Page With Views"](https://github.com/jerryhuang3/Tiny-App/blob/master/docs/Visitors.png)
 !["Creating URL Page"](https://github.com/jerryhuang3/Tiny-App/blob/master/docs/Creating%20a%20short%20URL.png)
 
 ## Dependencies
