@@ -97,7 +97,7 @@ app.get("/", (req, res) => {
     if (req.session.userid){
         res.redirect("/urls");
     } else {
-        res.redirect("/urls.login");
+        res.redirect("/urls/login");
     }
 });
 
