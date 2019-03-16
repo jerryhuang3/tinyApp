@@ -94,7 +94,11 @@ function uniqueID(shortURL, userID) {
 
 // Home Page
 app.get("/", (req, res) => {
-    res.redirect("/urls");
+    if (req.session.userid){
+        res.redirect("/urls");
+    } else {
+        res.redirect("/urls.login");
+    }
 });
 
 // Display all URLs created by logged in user
